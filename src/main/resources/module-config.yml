@@ -1,0 +1,29 @@
+#http config section
+http:
+  server:
+    port: 10000
+  communication:
+    enableRawDataTracing: true
+
+alertRouter:
+  metric: "Метрика: "
+  currentValue: "Текущий показатель: "
+  okMessagePrefix: "Проблема устранена"
+  proxy:
+    host: "localhost"
+    port: 8080
+    username: "username"
+    password: "password"
+  routers:
+    CRITICAL_CHANNEL:
+      telegram:
+        chatId: "chatId"
+        botApiKey: "apikey"
+      path: "/critical"
+      additionalMessage: "Some critical message"
+    COMMON_CHANNEL:
+      telegram:
+        chatId: "chatId"
+          botApiKey: "apikey"
+      path: "/common"
+      additionalMessage: "Some common message"
