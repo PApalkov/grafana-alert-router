@@ -18,4 +18,9 @@ public interface Constants {
         String CURRENT_VALUE = "currentValue";
         String OK_MESSAGE_PREFIX = "okMessagePrefix";
     }
+
+    interface Error {
+        String EMPTY_RESPONSE_ERROR = "Empty response!";
+        String STATUS_ERROR = "Status is not 200!";
+    }
 }

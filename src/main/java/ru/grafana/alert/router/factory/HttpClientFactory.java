@@ -5,12 +5,16 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.zalando.logbook.httpclient.LogbookHttpRequestInterceptor;
-import org.zalando.logbook.httpclient.LogbookHttpResponseInterceptor;
 import ru.grafana.alert.router.model.common.Proxy;
 
 import javax.net.ssl.SSLContext;
@@ -18,6 +22,8 @@ import javax.net.ssl.SSLContext;
 import static ru.art.core.checker.CheckerForEmptiness.isNotEmpty;
 import static ru.art.core.extension.ExceptionExtensions.nullIfException;
 import static ru.art.http.client.module.HttpClientModule.httpClientModule;
+import static ru.art.http.constants.HttpCommonConstants.HTTPS_SCHEME;
+import static ru.art.http.constants.HttpCommonConstants.HTTP_SCHEME;
 import static ru.grafana.alert.router.module.GrafanaAlertRouter.alertRouter;
 
 public class HttpClientFactory {
@@ -43,13 +49,12 @@ public class HttpClientFactory {
                 .setDefaultRequestConfig(httpClientModule().getRequestConfig())
                 .setDefaultConnectionConfig(httpClientModule().getConnectionConfig())
                 .setDefaultSocketConfig(httpClientModule().getSocketConfig())
-                .addInterceptorFirst(new LogbookHttpRequestInterceptor(httpClientModule().getLogbook()))
-                .addInterceptorLast(new LogbookHttpResponseInterceptor())
-//                .setConnectionManager(httpClientModule().getConnectionConfig())
-//                .setConnectionManager(new BasicHttpClientConnectionManager(RegistryBuilder.<ConnectionSocketFactory>create()
-//                        .register(HTTP_SCHEME, PlainConnectionSocketFactory.INSTANCE)
-//                        .register(HTTPS_SCHEME, new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE))
-//                        .build()))
+//                .addInterceptorFirst(new LogbookHttpRequestInterceptor(httpClientModule().getLogbook()))
+//                .addInterceptorLast(new LogbookHttpResponseInterceptor())
+                .setConnectionManager(new BasicHttpClientConnectionManager(RegistryBuilder.<ConnectionSocketFactory>create()
+                        .register(HTTP_SCHEME, PlainConnectionSocketFactory.INSTANCE)
+                        .register(HTTPS_SCHEME, new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE))
+                        .build()))
                 .setDefaultCredentialsProvider(credentialsProvider)
                 .setSSLContext(sslContext)
                 .build();
