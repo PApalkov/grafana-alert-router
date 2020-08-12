@@ -6,12 +6,14 @@ public interface Constants {
 
     String SOS_STICKER = "🆘🆘🆘🆘🆘";
     String OK_STICKER = "✅✅✅✅✅";
-
-    String TMP_FILE_PATH_TEMPLATE = "/Users/pavelapalkov/RTKIT/grafana-alert-router/src/main/resources/images/%s.png";
+    String URL_PREFIX = "URl: ";
 
     interface Config {
         String ALERT_ROUTER = "alertRouter";
         String PROXY = "proxy";
+        String TYPE = "type";
+        String TMP_FILE_PATH = "tmpFilePath";
+        String GRAFANA_REAL_HOST = "grafanaHost";
         String ROUTERS = "routers";
         String ADDITIONAL_MESSAGE = "additionalMessage";
         String METRIC = "metric";

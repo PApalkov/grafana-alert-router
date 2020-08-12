@@ -9,7 +9,10 @@ alertRouter:
   metric: "Метрика: "
   currentValue: "Текущий показатель: "
   okMessagePrefix: "Проблема устранена"
+  tmpFilePath: "/filepath"
+  grafanaHost: "grafana.com"
   proxy:
+    type: "HTTP"
     host: "localhost"
     port: 8080
     username: "username"

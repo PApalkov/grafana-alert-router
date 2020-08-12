@@ -6,6 +6,7 @@ import ru.grafana.alert.router.model.request.grafana.GrafanaHookRequestMessage;
 import java.util.List;
 
 import static ru.art.core.checker.CheckerForEmptiness.isEmpty;
+import static ru.art.core.constants.NetworkConstants.LOCALHOST;
 import static ru.art.core.constants.StringConstants.EMPTY_STRING;
 import static ru.art.core.constants.StringConstants.NEW_LINE;
 import static ru.grafana.alert.router.constants.Constants.*;
@@ -27,6 +28,7 @@ public class MessageBuilder {
         return OK_STICKER + NEW_LINE + NEW_LINE +
                 alertRouter().getOkMessagePrefix() + NEW_LINE +
                 grafanaHookRequestMessage.getMessage() + NEW_LINE +
+                buildGrafanaUrl(grafanaHookRequestMessage.getRuleUrl()) + NEW_LINE +
                 addEvalMatches(grafanaHookRequestMessage.getEvalMatches()) + NEW_LINE +
                 additionalMessage;
     }
@@ -34,6 +36,7 @@ public class MessageBuilder {
     public static String buildAlertingMessage(GrafanaHookRequestMessage grafanaHookRequestMessage, String additionalMessage) {
         return SOS_STICKER + NEW_LINE + NEW_LINE +
                 grafanaHookRequestMessage.getMessage() + NEW_LINE +
+                buildGrafanaUrl(grafanaHookRequestMessage.getRuleUrl()) + NEW_LINE +
                 addEvalMatches(grafanaHookRequestMessage.getEvalMatches()) + NEW_LINE +
                 additionalMessage;
     }
@@ -50,5 +53,9 @@ public class MessageBuilder {
         }
 
         return evalMatchMessageBuilder.toString();
+    }
+
+    private static String buildGrafanaUrl(String url) {
+        return isEmpty(url) ? EMPTY_STRING : URL_PREFIX + url.replace(LOCALHOST, alertRouter().getGrafanaRealHost());
     }
 }

@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.net.URL;
 
 import static ru.art.core.checker.CheckerForEmptiness.isEmpty;
-import static ru.art.logging.LoggingModule.loggingModule;
 
 public class FileLoader {
 
@@ -24,7 +23,7 @@ public class FileLoader {
 
             return downloadingFile;
         } catch (Exception e) {
-            loggingModule().getLogger().error(e);
+            System.out.println(e.getMessage());
         }
 
         return null;

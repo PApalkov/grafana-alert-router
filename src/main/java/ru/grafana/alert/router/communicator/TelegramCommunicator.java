@@ -26,6 +26,7 @@ import static ru.grafana.alert.router.constants.Constants.Error.EMPTY_RESPONSE_E
 import static ru.grafana.alert.router.constants.Constants.Error.STATUS_ERROR;
 import static ru.grafana.alert.router.constants.TelegramConstants.*;
 import static ru.grafana.alert.router.factory.HttpClientFactory.createProxyHttpClient;
+import static ru.grafana.alert.router.factory.HttpClientFactory.createProxyHttpFileClient;
 import static ru.grafana.alert.router.mapping.telegram.SendMessageTelegramRequestMapper.fromSendMessageTelegramRequest;
 
 //todo refactor
@@ -51,7 +52,7 @@ public class TelegramCommunicator {
 
     public static void sendTelegramPhoto(FileMessageRequest request, TelegramConfig telegramConfig) throws Exception {
 
-        CloseableHttpClient httpClient = createProxyHttpClient();
+        CloseableHttpClient httpClient = createProxyHttpFileClient();
         HttpPost uploadFile = new HttpPost(format(BOT_SEND_PHOTO_URL_TEMPLATE, telegramConfig.getBotApiKey()));
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
