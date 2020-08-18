@@ -27,7 +27,8 @@ public class MessageBuilder {
     public static String buildOkMessage(GrafanaHookRequestMessage grafanaHookRequestMessage, String additionalMessage) {
         return OK_STICKER + NEW_LINE + NEW_LINE +
                 alertRouter().getOkMessagePrefix() + NEW_LINE +
-                grafanaHookRequestMessage.getMessage() + NEW_LINE +
+                grafanaHookRequestMessage.getRuleName() + NEW_LINE +
+                grafanaHookRequestMessage.getMessage() + NEW_LINE + NEW_LINE +
                 buildGrafanaUrl(grafanaHookRequestMessage.getRuleUrl()) + NEW_LINE +
                 addEvalMatches(grafanaHookRequestMessage.getEvalMatches()) + NEW_LINE +
                 additionalMessage;
@@ -35,7 +36,8 @@ public class MessageBuilder {
 
     public static String buildAlertingMessage(GrafanaHookRequestMessage grafanaHookRequestMessage, String additionalMessage) {
         return SOS_STICKER + NEW_LINE + NEW_LINE +
-                grafanaHookRequestMessage.getMessage() + NEW_LINE +
+                grafanaHookRequestMessage.getRuleName() + NEW_LINE +
+                grafanaHookRequestMessage.getMessage() + NEW_LINE + NEW_LINE +
                 buildGrafanaUrl(grafanaHookRequestMessage.getRuleUrl()) + NEW_LINE +
                 addEvalMatches(grafanaHookRequestMessage.getEvalMatches()) + NEW_LINE +
                 additionalMessage;
